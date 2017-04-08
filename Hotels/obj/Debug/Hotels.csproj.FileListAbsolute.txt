@@ -6,3 +6,5 @@ D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.Properties.Res
 D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.csproj.GenerateResource.Cache
 D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.exe
 D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.pdb
+D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.csprojResolveAssemblyReference.cache
+D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.View.FormPerson.resources

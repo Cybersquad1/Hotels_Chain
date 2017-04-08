@@ -28,33 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lB1 = new System.Windows.Forms.ListBox();
+            this.mainMenu = new System.Windows.Forms.MenuStrip();
+            this.довідникToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemPerson = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lB1
+            // mainMenu
             // 
-            this.lB1.FormattingEnabled = true;
-            this.lB1.Location = new System.Drawing.Point(27, 51);
-            this.lB1.Name = "lB1";
-            this.lB1.Size = new System.Drawing.Size(221, 225);
-            this.lB1.TabIndex = 0;
+            this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.довідникToolStripMenuItem});
+            this.mainMenu.Location = new System.Drawing.Point(0, 0);
+            this.mainMenu.Name = "mainMenu";
+            this.mainMenu.Size = new System.Drawing.Size(782, 24);
+            this.mainMenu.TabIndex = 4;
+            this.mainMenu.Text = "menuStrip1";
+            // 
+            // довідникToolStripMenuItem
+            // 
+            this.довідникToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.itemPerson});
+            this.довідникToolStripMenuItem.Name = "довідникToolStripMenuItem";
+            this.довідникToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.довідникToolStripMenuItem.Text = "Довідник";
+            // 
+            // itemPerson
+            // 
+            this.itemPerson.Name = "itemPerson";
+            this.itemPerson.Size = new System.Drawing.Size(152, 22);
+            this.itemPerson.Text = "Користувачі";
+            this.itemPerson.Click += new System.EventHandler(this.itemPerson_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(387, 360);
-            this.Controls.Add(this.lB1);
+            this.ClientSize = new System.Drawing.Size(782, 458);
+            this.Controls.Add(this.mainMenu);
+            this.IsMdiContainer = true;
+            this.MainMenuStrip = this.mainMenu;
             this.Name = "FormMain";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.mainMenu.ResumeLayout(false);
+            this.mainMenu.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox lB1;
+        private System.Windows.Forms.MenuStrip mainMenu;
+        private System.Windows.Forms.ToolStripMenuItem довідникToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem itemPerson;
     }
 }
 
