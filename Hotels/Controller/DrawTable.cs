@@ -12,8 +12,8 @@ namespace Hotels.Controller
 {
     public class DrawTable
     {
-
-        public static void DrawDataTable(Base[] array, DataGridView dgv)
+        
+        public static void DrawDataTable(Base<Person>[] array, DataGridView dgv /*TextBox[] arrayTextBox*/)
         {
             Type myType = array[0].GetType();
             IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
@@ -40,8 +40,13 @@ namespace Hotels.Controller
                 table.Rows.Add(row);
             }
             dgv.DataSource = table;
+            //for (int i = 0; i < arrayTextBox.Length; i++)
+            //{
+            //    arrayTextBox[i].DataBindings.Add("Text", table, "");
+            //}
+
         }
-        public static void DrawObjectInTable(Base[] array, DataGridView dgv)
+        public static void DrawObjectInTable(Base<Person>[] array, DataGridView dgv)
         {
             dgv.Rows.Clear();
             dgv.Columns.Clear();
@@ -69,7 +74,7 @@ namespace Hotels.Controller
             }
 
         }
-        public static void AddRowsToTable(Base obj, DataGridView dgv)
+        public static void AddRowsToTable(Base<Person> obj, DataGridView dgv)
         {
             Dictionary<string, object> attributes = DictionaryFromType(obj);
             List<string> tmps = new List<string>();

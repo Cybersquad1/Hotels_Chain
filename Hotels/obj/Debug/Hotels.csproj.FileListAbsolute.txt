@@ -6,5 +6,10 @@ D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.Properties.Res
 D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.csproj.GenerateResource.Cache
 D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.exe
 D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.pdb
-D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.csprojResolveAssemblyReference.cache
 D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.View.FormPerson.resources
+D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.View.FormLogin.resources
+D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.View.FormRegister.resources
+D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.View.FormHotel.resources
+D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.View.FormRoomType.resources
+D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.View.FormRoom.resources
+D:\Iт-52\4_semestr\Курсова\Hotels\Hotels\obj\Debug\Hotels.csprojResolveAssemblyReference.cache

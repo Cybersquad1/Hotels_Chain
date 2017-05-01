@@ -24,6 +24,9 @@ namespace Hotels
             InitializeComponent();
             connectionString = ConfigurationManager.ConnectionStrings["Hotels.Properties.Settings.dbHotelsConnectionString"].ConnectionString;
             connection = new SqlConnection(connectionString);
+            FormLogin formLogin = new FormLogin();
+            formLogin.MdiParent = this;
+            formLogin.Show();
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -47,6 +50,41 @@ namespace Hotels
             FormPerson formperson = new FormPerson();
             formperson.MdiParent = this;
             formperson.Show();
+        }
+
+        private void itemHotels_Click(object sender, EventArgs e)
+        {
+            FormHotel formhotel = new FormHotel();
+            formhotel.MdiParent = this;
+            formhotel.Show();
+        }
+
+        private void itemRoomType_Click(object sender, EventArgs e)
+        {
+            FormRoomType formRoomType = new FormRoomType();
+            formRoomType.MdiParent = this;
+            formRoomType.Show();
+        }
+
+        private void itemRoom_Click(object sender, EventArgs e)
+        {
+            FormRoom formRoom = new FormRoom();
+            formRoom.MdiParent = this;
+            formRoom.Show();
+        }
+
+        private void itemBooking_Click(object sender, EventArgs e)
+        {
+            FormBooking formBooking = new FormBooking();
+            formBooking.MdiParent = this;
+            formBooking.Show();
+        }
+
+        private void itemEmployee_Click(object sender, EventArgs e)
+        {
+            FormEmployee formEmployee = new FormEmployee();
+            formEmployee.MdiParent = this;
+            formEmployee.Show();
         }
 
         //private void Draw()

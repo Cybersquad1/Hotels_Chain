@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Hotels.Model
 {
-    public class Base
+    public abstract class Base<T>
+        where T : Base<T>
     {
-        public virtual /*abstract*/ void Insert() { }
-        //public virtual List<> Retrieve() { return null; }
-        public virtual void Update() { }
-        public virtual void Delete() { }
+        public static Dictionary<int, T> Items = new Dictionary<int, T>();
+        public int ID { get; set; }
+        public abstract void Insert();
+        public abstract List<T> Retrieve();
+        public abstract void Update();
+        public abstract void Delete();
 
-        
+        protected static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Hotels.Properties.Settings.dbHotelsConnectionString"].ConnectionString);
     }
 }

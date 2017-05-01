@@ -14,46 +14,49 @@ namespace Hotels.View
 {
     public partial class FormPerson : Form
     {
+        ControllerPerson controller;
+        
         public FormPerson()
         {
             InitializeComponent();
+            //LoadDB();
+            Dictionary<string, TextBox>  textBoxs = new Dictionary<string, TextBox>();
+            textBoxs.Add("FirstName", tbFirstName);
+            textBoxs.Add("LastName", tbLastName);
+            textBoxs.Add("Email", tbEmail);
+            textBoxs.Add("Telephone", tbTelephone);
+            textBoxs.Add("Login", tbLogin);
+            textBoxs.Add("Password", tbPassword);
+            controller = new ControllerPerson(dGVPerson, bindingNavigatorFormPerson,textBoxs);
+            controller.FillColumns();
         }
 
         private void FormPerson_Load(object sender, EventArgs e)
         {
-            LoadDB();
-        }
-        private void LoadDB()
+            controller.LoadDB();
+        }     
+        private void saveToolStripButton_Click_1(object sender, EventArgs e)
         {
-            List<Person> list = Person.Retrieve();
-            //DrawTable.DrawObjectInTable(list.ToArray(), dGVPerson);
-            DrawTable.DrawDataTable(list.ToArray(), dGVPerson);
+            //saveToolStripButton.Enabled = false;
+            controller.Save();
+            controller.LoadDB();
         }
 
+        private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
+        {
+            //saveToolStripButton.Enabled = true;
+            
+        }
+
+        private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
+        {
+            controller.Delete();
+            controller.LoadDB();
+        }
         private void btnClose_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void btnInsert_Click(object sender, EventArgs e)
-        {
-            Person newperson = new Person();
-            newperson.FirstName = tbFirstName.Text;
-            newperson.LastName = tbLastName.Text;
-            newperson.Email = tbEmail.Text;
-            newperson.Telephone = tbTelephone.Text;
-            newperson.Insert();
-            LoadDB();
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnModify_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

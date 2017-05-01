@@ -8,17 +8,19 @@ using System.Configuration;
 
 namespace Hotels.Model
 {
-    public class Person:Base
+    public class Person:Base<Person>
     {
-        public int PersonID { get; set; }
+        //public int PersonID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
         public string Email { get; set; }
         public DateTime Birth { get; set; }
         public string Telephone { get; set; }
 
-        static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Hotels.Properties.Settings.dbHotelsConnectionString"].ConnectionString);
-        public Person() { }
+        
+        public Person(){}
         public Person(string firstName,string lastName,string email)
         {
             FirstName = firstName;
@@ -26,14 +28,15 @@ namespace Hotels.Model
             Email = email;
         }
 
+      
         public override void Insert()
         {
             try
             {
                 conn.Open();
                 string query = @"insert into tbPerson
-                            (FirstName, LastName,Email,Telephone)
-                            values (@FirstName, @LastName,@Email,@Telephone)";
+                            (FirstName, LastName,Email,Login,Password)
+                            values (@FirstName, @LastName,@Email,@Login,@Password)";
                 // 2. define parameters used in command object
                 SqlParameter param1 = new SqlParameter();
                 param1.ParameterName = "@FirstName";
@@ -44,18 +47,26 @@ namespace Hotels.Model
                 SqlParameter param3 = new SqlParameter();
                 param3.ParameterName = "@Email";
                 param3.Value = this.Email;
-                SqlParameter param4 = new SqlParameter();
-                param4.ParameterName = "@Birth";
-                param4.Value = this.Birth;
-                SqlParameter param5 = new SqlParameter();
-                param5.ParameterName = "@Telephone";
-                param5.Value = this.Telephone;
+                //SqlParameter param4 = new SqlParameter();
+                //param4.ParameterName = "@Birth";
+                //param4.Value = this.Birth;
+                //SqlParameter param5 = new SqlParameter();
+                //param5.ParameterName = "@Telephone";
+                //param5.Value = this.Telephone;
+                SqlParameter param6 = new SqlParameter();
+                param6.ParameterName = "@Login";
+                param6.Value = this.Login;
+                SqlParameter param7 = new SqlParameter();
+                param7.ParameterName = "@Password";
+                param7.Value = this.Password;
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.Add(param1);
                 cmd.Parameters.Add(param2);
                 cmd.Parameters.Add(param3);
-                cmd.Parameters.Add(param5);
+                //cmd.Parameters.Add(param5);
+                cmd.Parameters.Add(param6);
+                cmd.Parameters.Add(param7);
                 cmd.ExecuteNonQuery();
             }
             finally
@@ -68,7 +79,7 @@ namespace Hotels.Model
             }
 
         }
-        public /*override*/ static List<Person> Retrieve()
+        public override  List<Person> Retrieve()
         {
             try
             {
@@ -80,18 +91,23 @@ namespace Hotels.Model
                 // 2. Call Execute reader to get query results
                 SqlDataReader rdr = cmd.ExecuteReader();
                 List<Person> list = new List<Person>();
+                Items.Clear();
                 while (rdr.Read())
                 {
                     Person temp = new Person();
-                    temp.PersonID = Convert.ToInt32(rdr[0]);
+                    temp./*Person*/ID = Convert.ToInt32(rdr[0]);
                     temp.FirstName = rdr[1].ToString();
                     temp.LastName = rdr[2].ToString();
                     temp.Email = rdr[3].ToString();
-                    //temp.Birth = (DateTime)rdr[4];
-                    temp.Telephone = rdr[5].ToString();
+                    temp.Login = rdr[4].ToString();
+                    temp.Password = rdr[5].ToString();
+                    //temp.Birth = (DateTime)rdr[7];
+                    temp.Telephone = rdr[8].ToString();
                     list.Add(temp);
+                    //словник об'єктів
+                    Items.Add(temp./*Person*/ID, temp);
                 }
-                conn.Close();
+                conn.Close();               
                 return list;
             }
             finally
@@ -113,7 +129,7 @@ namespace Hotels.Model
                                  where PersonID = @PersonID";
                 SqlParameter param = new SqlParameter();
                 param.ParameterName = "@PersonID";
-                param.Value = this.PersonID;
+                param.Value = this./*Person*/ID;
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.Add(param);
                 cmd.ExecuteNonQuery();
@@ -138,8 +154,9 @@ namespace Hotels.Model
                 set FirstName = @FirstName,
                     LastName = @LastName,
                     Email = @Email,
-                    Birth = @Birth,
-                    Telephone = @Telephone
+                    Telephone = @Telephone,
+                    Login = @Login,
+                    Password = @Password
                 where PersonID = @PersonID";
 
                 // 1. Instantiate a new command with command text only
@@ -154,14 +171,20 @@ namespace Hotels.Model
                 param3.ParameterName = "@Email";
                 param3.Value = this.Email;
                 SqlParameter param4 = new SqlParameter();
-                param4.ParameterName = "@Birth";
-                param4.Value = this.Birth;
+                param4.ParameterName = "@Login";
+                param4.Value = this.Login;
                 SqlParameter param5 = new SqlParameter();
-                param5.ParameterName = "@Telephone";
-                param5.Value = this.Telephone;
+                param5.ParameterName = "@Password";
+                param5.Value = this.Password;
+                //SqlParameter param4 = new SqlParameter();
+                //param4.ParameterName = "@Birth";
+                //param4.Value = this.Birth;
                 SqlParameter param6 = new SqlParameter();
-                param6.ParameterName = "@PersonID";
-                param6.Value = this.PersonID;
+                param6.ParameterName = "@Telephone";
+                param6.Value = this.Telephone;
+                SqlParameter param7 = new SqlParameter();
+                param7.ParameterName = "@PersonID";
+                param7.Value = this./*Person*/ID;
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.Add(param1);
@@ -170,6 +193,7 @@ namespace Hotels.Model
                 cmd.Parameters.Add(param4);
                 cmd.Parameters.Add(param5);
                 cmd.Parameters.Add(param6);
+                cmd.Parameters.Add(param7);
                 // 3. Call ExecuteNonQuery to send command
                 cmd.ExecuteNonQuery();
             }
@@ -195,7 +219,7 @@ namespace Hotels.Model
                  where PersonID = @PersonID";
                 SqlParameter param1 = new SqlParameter();
                 param1.ParameterName = "@PersonID";
-                param1.Value = this.PersonID;
+                param1.Value = this.ID;
                 // 1. Instantiate a new command
                 SqlCommand cmd = new SqlCommand(query,conn);
                 cmd.Parameters.Add(param1);
