@@ -18,12 +18,31 @@ namespace Hotels.Controller
         public Dictionary<string, TextBox> TextBoxs = new Dictionary<string, TextBox>();
         public DataGridView dataGridView;
         public BindingNavigator bindingNavigator;
+
+        public Controller() { }
+        public Controller(Dictionary<string, TextBox> textBoxs)
+        {
+            foreach (var item in textBoxs)
+            {
+                TextBoxs.Add(item.Key, item.Value);
+            }
+        }
+        public Controller(DataGridView dgv, BindingNavigator bn)
+        {
+            dataGridView = dgv;
+            bindingNavigator = bn;
+            bindingSource.DataSource = dataTable;
+            dataGridView.DataSource = bindingSource;
+
+            bindingNavigator.BindingSource = bindingSource;
+        }
         public Controller(DataGridView dgv, BindingNavigator bn, Dictionary<string, TextBox> textBoxs)
         {
             dataGridView = dgv;
             bindingNavigator = bn;
             bindingSource.DataSource = dataTable;
             dataGridView.DataSource = bindingSource;
+            
             bindingNavigator.BindingSource = bindingSource;
             foreach (var item in textBoxs)
             {
@@ -33,37 +52,36 @@ namespace Hotels.Controller
         }
 
         //метод формує стовпці таблиці
-        public void FillColumns()
+        public virtual void FillColumns()
         {
-            Type myType = typeof(T);//array[0].GetType();
+            Type myType = typeof(T);
             IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
             DataColumn column;
             foreach (PropertyInfo prop in props)
-            {                
-                    column = new DataColumn();
-                    column.DataType = prop.PropertyType;
-                    column.ColumnName = prop.Name;
-                    column.ReadOnly = true;
-                    dataTable.Columns.Add(column);     
+            {
+                column = new DataColumn();
+                column.DataType = prop.PropertyType;
+                column.ColumnName = prop.Name;
+                column.ReadOnly = true;
+                dataTable.Columns.Add(column);     
             }
+            dataGridView.Columns["ID"].Visible = false;
         }
-        public void FillRows(T[] array)
+        public  void FillRows(T[] array)
         {
             if (dataTable.Rows.Count > 0)
                 dataTable.Rows.Clear();
             for (int i = 0; i < array.Length; i++)
                 AddRow(array[i]);
         }
-        public void AddRow(T currentrow)
+        public virtual void AddRow(T currentrow)
         {
             Type myType = typeof(T);//array[0].GetType();
             IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
             DataRow row = dataTable.NewRow();
             foreach (PropertyInfo prop in props)
             {
-               
-                    row[prop.Name] = prop.GetValue(currentrow, null);
-                
+                row[prop.Name] = prop.GetValue(currentrow, null); 
             }
             dataTable.Rows.Add(row);
         }

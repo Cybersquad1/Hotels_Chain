@@ -8,9 +8,10 @@ using System.Configuration;
 
 namespace Hotels.Model
 {
+    public enum Role { Client, Administrator, Concierge, Worker };
     public class Person:Base<Person>
     {
-        //public int PersonID { get; set; }
+        //Property
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Login { get; set; }
@@ -18,8 +19,54 @@ namespace Hotels.Model
         public string Email { get; set; }
         public DateTime Birth { get; set; }
         public string Telephone { get; set; }
-
+        public string Gender { get; set; }
+        public Role UserRole { get; set; }
         
+
+        public bool Male
+        {
+            get
+            {
+                if (Gender == "Male")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            set
+            {
+                if (value.Equals(true))
+                {
+                    Gender = "Male";
+                }
+            }
+        }
+        public bool Female
+        {
+            get
+            {
+                if (Gender == "Female")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            set
+            {
+                if (value.Equals(true))
+                {
+                    Gender = "Female";
+                }
+            }
+        }
         public Person(){}
         public Person(string firstName,string lastName,string email)
         {
@@ -28,15 +75,15 @@ namespace Hotels.Model
             Email = email;
         }
 
-      
+        //DB
         public override void Insert()
         {
             try
             {
                 conn.Open();
                 string query = @"insert into tbPerson
-                            (FirstName, LastName,Email,Login,Password)
-                            values (@FirstName, @LastName,@Email,@Login,@Password)";
+                            (FirstName,LastName,Email,Login,Password,Birth,Telephone,Gender,Role)
+                            values (@FirstName,@LastName,@Email,@Login,@Password,@Birth,@Telephone,@Gender,@Role)";
                 // 2. define parameters used in command object
                 SqlParameter param1 = new SqlParameter();
                 param1.ParameterName = "@FirstName";
@@ -47,26 +94,35 @@ namespace Hotels.Model
                 SqlParameter param3 = new SqlParameter();
                 param3.ParameterName = "@Email";
                 param3.Value = this.Email;
-                //SqlParameter param4 = new SqlParameter();
-                //param4.ParameterName = "@Birth";
-                //param4.Value = this.Birth;
-                //SqlParameter param5 = new SqlParameter();
-                //param5.ParameterName = "@Telephone";
-                //param5.Value = this.Telephone;
+                SqlParameter param4 = new SqlParameter();
+                param4.ParameterName = "@Birth";
+                param4.Value = this.Birth;
+                SqlParameter param5 = new SqlParameter();
+                param5.ParameterName = "@Telephone";
+                param5.Value = this.Telephone;
                 SqlParameter param6 = new SqlParameter();
                 param6.ParameterName = "@Login";
                 param6.Value = this.Login;
                 SqlParameter param7 = new SqlParameter();
                 param7.ParameterName = "@Password";
                 param7.Value = this.Password;
+                SqlParameter param8 = new SqlParameter();
+                param8.ParameterName = "@Gender";
+                param8.Value = this.Gender;
+                SqlParameter param9 = new SqlParameter();
+                param9.ParameterName = "@Role";
+                param9.Value = this.UserRole.ToString();
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.Add(param1);
                 cmd.Parameters.Add(param2);
                 cmd.Parameters.Add(param3);
-                //cmd.Parameters.Add(param5);
+                cmd.Parameters.Add(param4);
+                cmd.Parameters.Add(param5);
                 cmd.Parameters.Add(param6);
                 cmd.Parameters.Add(param7);
+                cmd.Parameters.Add(param8);
+                cmd.Parameters.Add(param9);
                 cmd.ExecuteNonQuery();
             }
             finally
@@ -79,12 +135,14 @@ namespace Hotels.Model
             }
 
         }
-        public override  List<Person> Retrieve()
+        public override void Get()
         {
             try
             {
                 conn.Open();
-                string query = @"select * from tbPerson";
+                string query = @"select PersonID,FirstName,LastName,Email,
+                                        Login, Password,Role,Birth,Telephone,Gender 
+                                        from tbPerson";
                 // 1. Instantiate a new command with a query and connection
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -95,20 +153,34 @@ namespace Hotels.Model
                 while (rdr.Read())
                 {
                     Person temp = new Person();
-                    temp./*Person*/ID = Convert.ToInt32(rdr[0]);
+                    temp.ID = Convert.ToInt32(rdr[0]);
                     temp.FirstName = rdr[1].ToString();
                     temp.LastName = rdr[2].ToString();
                     temp.Email = rdr[3].ToString();
                     temp.Login = rdr[4].ToString();
                     temp.Password = rdr[5].ToString();
-                    //temp.Birth = (DateTime)rdr[7];
+                    switch (rdr[6].ToString())
+                    {
+                        case "Administrator":
+                            temp.UserRole = Role.Administrator;
+                            break;
+                        case "Worker":
+                            temp.UserRole = Role.Worker;
+                            break;
+                        case "Concierge":
+                            temp.UserRole = Role.Concierge;
+                            break;
+                        default:
+                            temp.UserRole = Role.Client;
+                            break;
+                    }
+                    try { temp.Birth = (DateTime)rdr[7]; } catch { }
                     temp.Telephone = rdr[8].ToString();
-                    list.Add(temp);
+                    temp.Gender = rdr[9].ToString();
                     //словник об'єктів
-                    Items.Add(temp./*Person*/ID, temp);
+                    Items.Add(temp.ID, temp);
                 }
-                conn.Close();               
-                return list;
+                conn.Close();
             }
             finally
             {
@@ -119,20 +191,48 @@ namespace Hotels.Model
                 }
             }
         }
-
         public void Select(int id)
         {
             try
             {
                 conn.Open();
-                string query = @"select * from tbPerson 
-                                 where PersonID = @PersonID";
+                string query = @"select PersonID,FirstName,LastName,Email,
+                                        Login, Password,Role,Birth,Telephone,Gender 
+                                        from tbPerson where PersonID = @PersonID";
                 SqlParameter param = new SqlParameter();
                 param.ParameterName = "@PersonID";
-                param.Value = this./*Person*/ID;
+                param.Value = this.ID;
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.Add(param);
-                cmd.ExecuteNonQuery();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    ID = Convert.ToInt32(rdr[0]);
+                    FirstName = rdr[1].ToString();
+                    LastName = rdr[2].ToString();
+                    Email = rdr[3].ToString();
+                    Login = rdr[4].ToString();
+                    Password = rdr[5].ToString();
+                    switch (rdr[6].ToString())
+                    {
+                        case "Administrator":
+                            UserRole = Role.Administrator;
+                            break;
+                        case "Worker":
+                            UserRole = Role.Worker;
+                            break;
+                        case "Concierge":
+                            UserRole = Role.Concierge;
+                            break;
+                        default:
+                            UserRole = Role.Client;
+                            break;
+                    }
+                    try { Birth = (DateTime)rdr[7]; } catch { }
+                    Telephone = rdr[8].ToString();
+                    Gender = rdr[9].ToString();
+                }
+                conn.Close();
             }
             finally
             {
@@ -143,6 +243,69 @@ namespace Hotels.Model
                 }
             }
         }
+        public bool Select(string login, string password)
+        {
+            bool flag = false;
+            try
+            {
+
+                conn.Open();
+                string query = @"select * from tbPerson
+                                 where Login = @Login and Password = @Password";
+                // 1. Instantiate a new command with a query and connection
+                SqlParameter param1 = new SqlParameter();
+                param1.ParameterName = "@Login";
+                param1.Value = login;
+                SqlParameter param2 = new SqlParameter();
+                param2.ParameterName = "@Password";
+                param2.Value = password;
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.Add(param1);
+                cmd.Parameters.Add(param2);
+                // 2. Call Execute reader to get query results
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    ID = Convert.ToInt32(rdr[0]);
+                    FirstName = rdr[1].ToString();
+                    LastName = rdr[2].ToString();
+                    Email = rdr[3].ToString();
+                    Login = rdr[4].ToString();
+                    Password = rdr[5].ToString();
+                    switch (rdr[6].ToString())
+                    {
+                        case "Administrator":
+                            UserRole = Role.Administrator;
+                            break;
+                        case "Worker":
+                            UserRole = Role.Worker;
+                            break;
+                        case "Concierge":
+                            UserRole = Role.Concierge;
+                            break;
+                        default:
+                            UserRole = Role.Client;
+                            break;
+                    }
+                    try { Birth = (DateTime)rdr[7]; } catch { }
+                    Telephone = rdr[8].ToString();
+                    Gender = rdr[9].ToString();
+                    flag = true;
+                }
+                conn.Close();
+            }
+            finally
+            {
+                // Close the connection
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+            return flag;
+        }
+
         public override void Update()
         {
             try
@@ -156,7 +319,10 @@ namespace Hotels.Model
                     Email = @Email,
                     Telephone = @Telephone,
                     Login = @Login,
-                    Password = @Password
+                    Password = @Password,
+                    Gender = @Gender,
+                    Birth = @Birth,
+                    Role = @Role
                 where PersonID = @PersonID";
 
                 // 1. Instantiate a new command with command text only
@@ -176,15 +342,21 @@ namespace Hotels.Model
                 SqlParameter param5 = new SqlParameter();
                 param5.ParameterName = "@Password";
                 param5.Value = this.Password;
-                //SqlParameter param4 = new SqlParameter();
-                //param4.ParameterName = "@Birth";
-                //param4.Value = this.Birth;
                 SqlParameter param6 = new SqlParameter();
                 param6.ParameterName = "@Telephone";
                 param6.Value = this.Telephone;
                 SqlParameter param7 = new SqlParameter();
                 param7.ParameterName = "@PersonID";
-                param7.Value = this./*Person*/ID;
+                param7.Value = this.ID;
+                SqlParameter param8 = new SqlParameter();
+                param8.ParameterName = "@Birth";
+                param8.Value = this.Birth;
+                SqlParameter param9 = new SqlParameter();
+                param9.ParameterName = "@Gender";
+                param9.Value = this.Gender;
+                SqlParameter param10 = new SqlParameter();
+                param10.ParameterName = "@Role";
+                param10.Value = this.UserRole.ToString();
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.Add(param1);
@@ -194,6 +366,9 @@ namespace Hotels.Model
                 cmd.Parameters.Add(param5);
                 cmd.Parameters.Add(param6);
                 cmd.Parameters.Add(param7);
+                cmd.Parameters.Add(param8);
+                cmd.Parameters.Add(param9);
+                cmd.Parameters.Add(param10);
                 // 3. Call ExecuteNonQuery to send command
                 cmd.ExecuteNonQuery();
             }
@@ -234,6 +409,11 @@ namespace Hotels.Model
                     conn.Close();
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return FirstName + " "+ LastName;
         }
     }
 }

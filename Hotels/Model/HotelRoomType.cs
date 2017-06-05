@@ -48,6 +48,7 @@ namespace Hotels.Model
         {
             Hotel = ht; RoomType = rt;
         }
+        //DB
         public override void Insert()
         {
             try
@@ -78,7 +79,7 @@ namespace Hotels.Model
                 }
             }
         }
-        public override List<HotelRoomType> Retrieve()
+        public override void Get()
         {
             try
             {
@@ -89,7 +90,6 @@ namespace Hotels.Model
 
                 // 2. Call Execute reader to get query results
                 SqlDataReader rdr = cmd.ExecuteReader();
-                List<HotelRoomType> list = new List<HotelRoomType>();
                 Items.Clear();
                 while (rdr.Read())
                 {
@@ -97,12 +97,10 @@ namespace Hotels.Model
                     temp.ID = Convert.ToInt32(rdr[0]);
                     temp._hotelID = Convert.ToInt32(rdr[1]);
                     temp._roomTypeID = Convert.ToInt32(rdr[2]);
-                    list.Add(temp);
                     //словник об'єктів
                     Items.Add(temp.ID, temp);
                 }
                 conn.Close();
-                return list;
             }
             finally
             {

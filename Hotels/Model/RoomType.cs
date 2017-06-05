@@ -9,7 +9,6 @@ namespace Hotels.Model
 {
     public class RoomType:Base<RoomType>
     {
-        //public int RoomTypeID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
@@ -17,7 +16,7 @@ namespace Hotels.Model
         
         //public int HotelID { get; set; }
 
-        List<Hotel> Hotels
+        public List<Hotel> Hotels
         {
             get
             {
@@ -28,7 +27,7 @@ namespace Hotels.Model
                 return res;
             }
         }
-        List<Room> Rooms
+        public List<Room> Rooms
         {
             get
             {
@@ -38,6 +37,10 @@ namespace Hotels.Model
                         res.Add(rm);
                 return res;
             }
+        }
+        public override string ToString()
+        {
+            return Name;
         }
         public override void Insert()
         {
@@ -77,7 +80,7 @@ namespace Hotels.Model
                 }
             }
         }
-        public override List<RoomType> Retrieve()
+        public override void Get()
         {
             try
             {
@@ -88,7 +91,6 @@ namespace Hotels.Model
 
                 // 2. Call Execute reader to get query results
                 SqlDataReader rdr = cmd.ExecuteReader();
-                List<RoomType> list = new List<RoomType>();
                 Items.Clear();
                 while (rdr.Read())
                 {
@@ -98,12 +100,10 @@ namespace Hotels.Model
                     temp.Description = rdr[2].ToString();
                     temp.Price = Convert.ToDecimal(rdr[3]);
                     temp.MaxPerson = Convert.ToInt16(rdr[4]);
-                    list.Add(temp);
                     //словник об'єктів
                     Items.Add(temp.ID, temp);
                 }
                 conn.Close();
-                return list;
             }
             finally
             {

@@ -11,13 +11,18 @@ namespace Hotels.Controller
 {
     public class ControllerRoomType:Controller<RoomType>
     {
-        public ControllerRoomType(DataGridView dgv, BindingNavigator bn, Dictionary<string, TextBox> textBoxs):base(dgv,bn,textBoxs){ }
+        RichTextBox Description;
+        public ControllerRoomType(DataGridView dgv, BindingNavigator bn, Dictionary<string, TextBox> textBoxs, RichTextBox rtb):base(dgv,bn,textBoxs)
+        {
+            Description = rtb;
+            Description.DataBindings.Add("Text", bindingSource, "Description");
+        }
 
         public override void Save()
         {
             RoomType roomType = new RoomType();
             roomType.Name = TextBoxs["Name"].Text;
-            roomType.Description = TextBoxs["Description"].Text;
+            roomType.Description = Description.Text;
             roomType.Price = Convert.ToDecimal(TextBoxs["Price"].Text);
             roomType.MaxPerson = Convert.ToInt16(TextBoxs["MaxPerson"].Text);
 
@@ -38,9 +43,14 @@ namespace Hotels.Controller
         }
         public override void LoadDB()
         {
-            RoomType temp = new RoomType();
-            List<RoomType> listPerson = temp.Retrieve();
-            FillRows(listPerson.ToArray());
+            new RoomType().Get();
+            FillRows(RoomType.Items.Values.ToArray());
+        }
+
+        public override void FillColumns()
+        {
+            base.FillColumns();
+            dataGridView.Columns["Description"].Visible = false;
         }
     }
 }

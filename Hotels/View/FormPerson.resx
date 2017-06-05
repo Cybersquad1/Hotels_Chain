@@ -204,4 +204,28 @@
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>54</value>
   </metadata>
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA
+        AACto4//raOP/62jj/+to4//raOP/62jj/+to4//raOP/5uPeP+bj3j/m494/5uPeP+bj3j/m494/5uP
+        eP+bj3j//////7Hr//+x6///sev//7Hr//9Yzv//9bUo//W1KP/jmQL/45kC/0C///+B3///gd///4Hf
+        //+B3//////////////T0JP/9bUo//W1KP+x6///WM7///W1KP/1tSj/45kC/+OZAv9Av///gd///+OZ
+        Av/jmQL/sryA////////////0tCT//W1KP/0tSj/sev//1jO///1tSj/9bUo/+OZAv/jmQL/QL///4Hf
+        ///imQL/45kC/7G8gP///////v7+/8Dez//wuDX/3sdw/6nKzv+IoJ7/r5FW/6+RVv+Xej3/l3o9/2mE
+        hP9+tsH/w7BV/92dEP+Xz8X//v7+//7+/v+x6///sev//7Hr//+x6///sev//7Hr//+x6///gd///4Hf
+        //+B3///gd///4Hf//+B3///gd////7+/v/+/v7/0tCT//W1KP/0tSj/sev///S1KP/1tSj/0tCU/7G8
+        gP/jmQL/4pkC/4Hf///imQL/45kC/7G8gP/+/v7//v7+/8Dez//wuDX/3sdw/7Hr///ex3D/8Lg1/8De
+        z/+Xz8X/3Z0R/8OwVf+B3///w7BV/92dEP+Xz8X//v7+//7+/v+x6///sev//7Hr//+x6///sev//7Hr
+        //+x6///gd///4Hf//+B3///gd///4Hf//+B3///gd////7+/v/+/v7/0tCT//W1KP/0tSj/sev///S1
+        KP/1tSj/0tCU/7G8gP/jmQL/4pkC/4Hf///imQL/45kC/7G8gP/+/v7//v7+/8Dez//wuDX/3sdw/7Hr
+        ///ex3D/8Lg1/8Dez/+Xz8X/3Z0R/8OwVf+B3///w7BV/92dEP+Xz8X//v7+//7+/v+Z5f//meX//5nl
+        //+Z5f//meX//5nl//+Z5f//gd///4Hf//+B3///gd///4Hf//+B3///gd////7+/v/Z1Mz/m494/5uP
+        eP+bj3j/m494/5uPeP+bj3j/m494/3puVP96blT/em5U/3puVP96blT/em5U/3puVP/MyL7/////////
+        //+b2f//zOz//2nG//9vyP//YMP//+/5//9pxv//v+f//1rB//+U1///Vr///9Dt////////////////
+        ////////m9n//23I//9ixP//ZMT//4vT///X8P//acb//7/n//9dwv//qt///6Hb////////////////
+        /////////////83s///l9f//tOL+/73l/v+f2v7/seH+/4LP/v+x4f7/hdD+/7Dh/v/Q7f//////////
+        ////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAA==
+</value>
+  </data>
 </root>

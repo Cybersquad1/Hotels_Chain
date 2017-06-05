@@ -21,13 +21,17 @@ namespace Hotels.View
             InitializeComponent();
             //LoadDB();
             Dictionary<string, TextBox>  textBoxs = new Dictionary<string, TextBox>();
+            Dictionary<string, RadioButton> radioButtons = new Dictionary<string, RadioButton>();
             textBoxs.Add("FirstName", tbFirstName);
             textBoxs.Add("LastName", tbLastName);
             textBoxs.Add("Email", tbEmail);
             textBoxs.Add("Telephone", tbTelephone);
             textBoxs.Add("Login", tbLogin);
             textBoxs.Add("Password", tbPassword);
-            controller = new ControllerPerson(dGVPerson, bindingNavigatorFormPerson,textBoxs);
+            //textBoxs.Add("UserRole", tbRole);
+            radioButtons.Add("Male", rBMale);
+            radioButtons.Add("Female", rBFemale);
+            controller = new ControllerPerson(dGVPerson, bindingNavigatorFormPerson,textBoxs,dTPBirth, radioButtons,cbRole);
             controller.FillColumns();
         }
 
@@ -53,10 +57,15 @@ namespace Hotels.View
             controller.Delete();
             controller.LoadDB();
         }
-        private void btnClose_Click(object sender, EventArgs e)
+
+        private void rBMale_CheckedChanged(object sender, EventArgs e)
+        {
+            //controller.Gender = "Male";
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
         {
             Close();
         }
-
     }
 }

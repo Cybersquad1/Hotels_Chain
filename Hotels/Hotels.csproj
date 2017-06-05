@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,9 +50,16 @@
   <ItemGroup>
     <Compile Include="Controller\Controller.cs" />
     <Compile Include="Controller\ControllerBooking.cs" />
+    <Compile Include="Controller\ControllerCkeckIn.cs" />
+    <Compile Include="Controller\ControllerClient.cs" />
     <Compile Include="Controller\ControllerEmployee.cs" />
     <Compile Include="Controller\ControllerHotel.cs" />
+    <Compile Include="Controller\ControllerHotelEmployee.cs" />
+    <Compile Include="Controller\ControllerHotelRoomType.cs" />
+    <Compile Include="Controller\ControllerMain.cs" />
+    <Compile Include="Controller\ControllerPayment.cs" />
     <Compile Include="Controller\ControllerPerson.cs" />
+    <Compile Include="Controller\ControllerProfile.cs" />
     <Compile Include="Controller\ControllerRoom.cs" />
     <Compile Include="Controller\ControllerRoomType.cs" />
     <Compile Include="Controller\DrawTable.cs" />
@@ -67,15 +75,44 @@
     <Compile Include="Model\Hotel.cs" />
     <Compile Include="Model\HotelEmployee.cs" />
     <Compile Include="Model\HotelRoomType.cs" />
-    <Compile Include="Model\Order.cs" />
     <Compile Include="Model\Payment.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomType.cs" />
+    <Compile Include="View\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\FormBooking.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\FormBooking.Designer.cs">
       <DependentUpon>FormBooking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormBookingClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormBookingClient.Designer.cs">
+      <DependentUpon>FormBookingClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormBookingMake.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormBookingMake.Designer.cs">
+      <DependentUpon>FormBookingMake.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormCheckIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormCheckIn.Designer.cs">
+      <DependentUpon>FormCheckIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormClient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormClient.Designer.cs">
+      <DependentUpon>FormClient.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormEmployee.cs">
       <SubType>Form</SubType>
@@ -88,6 +125,18 @@
     </Compile>
     <Compile Include="View\FormHotel.Designer.cs">
       <DependentUpon>FormHotel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormHotelEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormHotelEmployee.Designer.cs">
+      <DependentUpon>FormHotelEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormHotelRoomType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormHotelRoomType.Designer.cs">
+      <DependentUpon>FormHotelRoomType.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormLogin.cs">
       <SubType>Form</SubType>
@@ -104,11 +153,23 @@
     <Compile Include="Model\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\FormPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormPayment.Designer.cs">
+      <DependentUpon>FormPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\FormPerson.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\FormPerson.Designer.cs">
       <DependentUpon>FormPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormProfile.Designer.cs">
+      <DependentUpon>FormProfile.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormRegister.cs">
       <SubType>Form</SubType>
@@ -128,8 +189,47 @@
     <Compile Include="View\FormRoomType.Designer.cs">
       <DependentUpon>FormRoomType.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\FormStatisticEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormStatisticEmployee.Designer.cs">
+      <DependentUpon>FormStatisticEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormStatisticHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormStatisticHotel.Designer.cs">
+      <DependentUpon>FormStatisticHotel.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="View\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormBooking.resx">
+      <DependentUpon>FormBooking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormBookingClient.resx">
+      <DependentUpon>FormBookingClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormBookingMake.resx">
+      <DependentUpon>FormBookingMake.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormCheckIn.resx">
+      <DependentUpon>FormCheckIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormClient.resx">
+      <DependentUpon>FormClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormEmployee.resx">
+      <DependentUpon>FormEmployee.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\FormHotel.resx">
       <DependentUpon>FormHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormHotelEmployee.resx">
+      <DependentUpon>FormHotelEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormHotelRoomType.resx">
+      <DependentUpon>FormHotelRoomType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
@@ -146,8 +246,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\FormPayment.resx">
+      <DependentUpon>FormPayment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\FormPerson.resx">
       <DependentUpon>FormPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormProfile.resx">
+      <DependentUpon>FormProfile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormRegister.resx">
       <DependentUpon>FormRegister.cs</DependentUpon>
@@ -157,6 +263,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormRoomType.resx">
       <DependentUpon>FormRoomType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormStatisticEmployee.resx">
+      <DependentUpon>FormStatisticEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormStatisticHotel.resx">
+      <DependentUpon>FormStatisticHotel.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="dbHotelsDataSet.xsc">
       <DependentUpon>dbHotelsDataSet.xsd</DependentUpon>

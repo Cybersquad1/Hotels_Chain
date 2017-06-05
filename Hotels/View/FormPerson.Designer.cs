@@ -30,21 +30,23 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPerson));
-            this.btnClose = new System.Windows.Forms.Button();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbRole = new System.Windows.Forms.TextBox();
+            this.rBFemale = new System.Windows.Forms.RadioButton();
+            this.rBMale = new System.Windows.Forms.RadioButton();
+            this.label9 = new System.Windows.Forms.Label();
+            this.dTPBirth = new System.Windows.Forms.DateTimePicker();
             this.tbPassword = new System.Windows.Forms.TextBox();
             this.tbLogin = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.tbTelephone = new System.Windows.Forms.TextBox();
-            this.tbBirth = new System.Windows.Forms.TextBox();
             this.tbEmail = new System.Windows.Forms.TextBox();
             this.tbLastName = new System.Windows.Forms.TextBox();
             this.tbFirstName = new System.Windows.Forms.TextBox();
@@ -62,21 +64,13 @@
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
             this.dGVPerson = new System.Windows.Forms.DataGridView();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.cbRole = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorFormPerson)).BeginInit();
             this.bindingNavigatorFormPerson.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dGVPerson)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(601, 365);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(97, 39);
-            this.btnClose.TabIndex = 5;
-            this.btnClose.Text = "Вийти";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // label1
             // 
@@ -110,9 +104,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(18, 113);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(33, 13);
+            this.label4.Size = new System.Drawing.Size(98, 13);
             this.label4.TabIndex = 9;
-            this.label4.Text = "Дата";
+            this.label4.Text = "Дата народження";
             // 
             // label5
             // 
@@ -125,14 +119,17 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.tbRole);
+            this.groupBox1.Controls.Add(this.cbRole);
+            this.groupBox1.Controls.Add(this.rBFemale);
+            this.groupBox1.Controls.Add(this.rBMale);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.dTPBirth);
             this.groupBox1.Controls.Add(this.tbPassword);
             this.groupBox1.Controls.Add(this.tbLogin);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.tbTelephone);
-            this.groupBox1.Controls.Add(this.tbBirth);
             this.groupBox1.Controls.Add(this.tbEmail);
             this.groupBox1.Controls.Add(this.tbLastName);
             this.groupBox1.Controls.Add(this.tbFirstName);
@@ -143,16 +140,51 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(5, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(257, 283);
+            this.groupBox1.Size = new System.Drawing.Size(240, 306);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Користувач:";
             // 
-            // tbRole
+            // rBFemale
             // 
-            this.tbRole.Location = new System.Drawing.Point(123, 215);
-            this.tbRole.Name = "tbRole";
-            this.tbRole.Size = new System.Drawing.Size(100, 20);
-            this.tbRole.TabIndex = 21;
+            this.rBFemale.AutoSize = true;
+            this.rBFemale.Location = new System.Drawing.Point(123, 273);
+            this.rBFemale.Name = "rBFemale";
+            this.rBFemale.Size = new System.Drawing.Size(44, 17);
+            this.rBFemale.TabIndex = 25;
+            this.rBFemale.Text = "Жін";
+            this.rBFemale.UseVisualStyleBackColor = true;
+            // 
+            // rBMale
+            // 
+            this.rBMale.AutoSize = true;
+            this.rBMale.Checked = true;
+            this.rBMale.Location = new System.Drawing.Point(123, 250);
+            this.rBMale.Name = "rBMale";
+            this.rBMale.Size = new System.Drawing.Size(45, 17);
+            this.rBMale.TabIndex = 24;
+            this.rBMale.TabStop = true;
+            this.rBMale.Text = "Чол";
+            this.rBMale.UseVisualStyleBackColor = true;
+            this.rBMale.CheckedChanged += new System.EventHandler(this.rBMale_CheckedChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(20, 250);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(36, 13);
+            this.label9.TabIndex = 23;
+            this.label9.Text = "Стать";
+            // 
+            // dTPBirth
+            // 
+            this.dTPBirth.CustomFormat = "dd.MM.yyyy";
+            this.dTPBirth.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dTPBirth.Location = new System.Drawing.Point(123, 112);
+            this.dTPBirth.Name = "dTPBirth";
+            this.dTPBirth.Size = new System.Drawing.Size(100, 20);
+            this.dTPBirth.TabIndex = 22;
             // 
             // tbPassword
             // 
@@ -171,7 +203,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 215);
+            this.label8.Location = new System.Drawing.Point(19, 221);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(32, 13);
             this.label8.TabIndex = 18;
@@ -201,13 +233,6 @@
             this.tbTelephone.Name = "tbTelephone";
             this.tbTelephone.Size = new System.Drawing.Size(100, 20);
             this.tbTelephone.TabIndex = 15;
-            // 
-            // tbBirth
-            // 
-            this.tbBirth.Location = new System.Drawing.Point(123, 113);
-            this.tbBirth.Name = "tbBirth";
-            this.tbBirth.Size = new System.Drawing.Size(100, 20);
-            this.tbBirth.TabIndex = 14;
             // 
             // tbEmail
             // 
@@ -255,7 +280,7 @@
             this.bindingNavigatorFormPerson.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.bindingNavigatorFormPerson.Name = "bindingNavigatorFormPerson";
             this.bindingNavigatorFormPerson.PositionItem = this.bindingNavigatorPositionItem;
-            this.bindingNavigatorFormPerson.Size = new System.Drawing.Size(731, 25);
+            this.bindingNavigatorFormPerson.Size = new System.Drawing.Size(1039, 25);
             this.bindingNavigatorFormPerson.TabIndex = 12;
             this.bindingNavigatorFormPerson.Text = "bindingNavigator1";
             // 
@@ -360,24 +385,53 @@
             // 
             this.dGVPerson.AllowUserToAddRows = false;
             this.dGVPerson.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.dGVPerson.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dGVPerson.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.dGVPerson.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dGVPerson.BackgroundColor = System.Drawing.SystemColors.ControlLight;
             this.dGVPerson.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dGVPerson.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dGVPerson.Location = new System.Drawing.Point(268, 29);
+            this.dGVPerson.Location = new System.Drawing.Point(289, 29);
             this.dGVPerson.Name = "dGVPerson";
-            this.dGVPerson.Size = new System.Drawing.Size(463, 283);
+            this.dGVPerson.Size = new System.Drawing.Size(738, 283);
             this.dGVPerson.TabIndex = 13;
+            // 
+            // btnExit
+            // 
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnExit.Location = new System.Drawing.Point(856, 366);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(116, 39);
+            this.btnExit.TabIndex = 53;
+            this.btnExit.Text = "Вихід";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // cbRole
+            // 
+            this.cbRole.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRole.FormattingEnabled = true;
+            this.cbRole.Location = new System.Drawing.Point(123, 218);
+            this.cbRole.Name = "cbRole";
+            this.cbRole.Size = new System.Drawing.Size(100, 21);
+            this.cbRole.TabIndex = 54;
             // 
             // FormPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(731, 429);
+            this.ClientSize = new System.Drawing.Size(1039, 429);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.dGVPerson);
             this.Controls.Add(this.bindingNavigatorFormPerson);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnClose);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormPerson";
-            this.Text = "FormPerson";
+            this.Text = "Користувачі";
             this.Load += new System.EventHandler(this.FormPerson_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -391,7 +445,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -399,7 +452,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tbTelephone;
-        private System.Windows.Forms.TextBox tbBirth;
         private System.Windows.Forms.TextBox tbEmail;
         private System.Windows.Forms.TextBox tbLastName;
         private System.Windows.Forms.BindingNavigator bindingNavigatorFormPerson;
@@ -417,11 +469,16 @@
         private System.Windows.Forms.TextBox tbFirstName;
         private System.Windows.Forms.ToolStripButton saveToolStripButton;
         private System.Windows.Forms.DataGridView dGVPerson;
-        private System.Windows.Forms.TextBox tbRole;
         private System.Windows.Forms.TextBox tbPassword;
         private System.Windows.Forms.TextBox tbLogin;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DateTimePicker dTPBirth;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.RadioButton rBFemale;
+        private System.Windows.Forms.RadioButton rBMale;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ComboBox cbRole;
     }
 }

@@ -17,10 +17,13 @@ namespace Hotels.Model
         public static Dictionary<int, T> Items = new Dictionary<int, T>();
         public int ID { get; set; }
         public abstract void Insert();
-        public abstract List<T> Retrieve();
+        public abstract void Get();
         public abstract void Update();
         public abstract void Delete();
-
+        public override string ToString()
+        {
+            return "";
+        }
         protected static SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Hotels.Properties.Settings.dbHotelsConnectionString"].ConnectionString);
     }
 }

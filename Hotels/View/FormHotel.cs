@@ -19,6 +19,10 @@ namespace Hotels.View
             InitializeComponent();
             Dictionary<string, TextBox> textBoxs = new Dictionary<string, TextBox>();
             textBoxs.Add("Name", tbName);
+            textBoxs.Add("City", tbCity);
+            textBoxs.Add("Street", tbStreet);
+            textBoxs.Add("Email", tbEmail);
+            textBoxs.Add("Telephone", tbTelephone);
             controller = new ControllerHotel(dgvHotel, bindingNavigatorFormHotel, textBoxs);
             controller.FillColumns();
         }
@@ -36,10 +40,19 @@ namespace Hotels.View
 
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
         {
-            controller.Delete();
-            controller.LoadDB();
+            DialogResult dialog = MessageBox.Show("Ви справді хочете видалити готель?",
+            "Видалення", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dialog == DialogResult.Yes)
+            {
+                controller.Delete();
+                controller.LoadDB();
+            }
         }
 
-
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

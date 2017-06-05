@@ -1,4 +1,5 @@
-﻿using Hotels.Model;
+﻿using Hotels.Controller;
+using Hotels.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,26 +14,38 @@ namespace Hotels.View
 {
     public partial class FormRegister : Form
     {
+        ControllerProfile controller;
         public FormRegister()
         {
             InitializeComponent();
+            Dictionary<string, TextBox> textBoxs = new Dictionary<string, TextBox>();
+            Dictionary<string, RadioButton> radioButtons = new Dictionary<string, RadioButton>();
+            textBoxs.Add("FirstName", tbFirstName);
+            textBoxs.Add("LastName", tbLastName);
+            textBoxs.Add("Email", tbEmail);
+            textBoxs.Add("Telephone", tbTelephone);
+            textBoxs.Add("Login", tbLogin);
+            textBoxs.Add("Password", tbPassword1);
+            radioButtons.Add("Male", rBMale);
+            radioButtons.Add("Female", rBFemale);
+            controller = new ControllerProfile(textBoxs, dTPBirth, radioButtons);
         }
 
+        private void FormRegister_Load(object sender, EventArgs e)
+        {
+            controller.NewProfile();
+        }
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            if(tBPassword1.Text !="" && tBPassword2.Text != "")
+            if(tbPassword1.Text !="" && tbPassword2.Text != "")
             {
-                if (tBPassword1.Text == tBPassword2.Text)
+                if (tbPassword1.Text == tbPassword2.Text)
                 {
-                    Person tempPerson = new Person();
-                    tempPerson.FirstName = tBFirstName.Text;
-                    tempPerson.LastName = tbLastName.Text;
-                    tempPerson.Email = tBEmail.Text;
-                    tempPerson.Telephone = "";
-                    tempPerson.Login = tBLogin.Text;
-                    tempPerson.Password = tBPassword1.Text;
-                    tempPerson.Insert();
-                    MessageBox.Show("Користувач " + tempPerson.Login + " зареєстрований", "Реєстрація пройшла успішно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    controller.UpdateProfile();
+                    MessageBox.Show("Користувач " + tbLogin.Text + " зареєстрований", "Реєстрація пройшла успішно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    FormLogin formRegister = new FormLogin();
+                    formRegister.MdiParent = MdiParent;
+                    formRegister.Show();
                     this.Close();
                 }
                 else
@@ -57,14 +70,15 @@ namespace Hotels.View
         {
             if (checkBoxShow.Checked)
             {
-                tBPassword1.PasswordChar = '\0';
-                tBPassword2.PasswordChar = '\0';
+                tbPassword1.PasswordChar = '\0';
+                tbPassword2.PasswordChar = '\0';
             }
             else
             {
-                tBPassword1.PasswordChar = '*';
-                tBPassword2.PasswordChar = '*';
+                tbPassword1.PasswordChar = '*';
+                tbPassword2.PasswordChar = '*';
             }
         }
+
     }
 }

@@ -19,16 +19,16 @@ namespace Hotels.View
             InitializeComponent();
             Dictionary<string, TextBox> textBoxs = new Dictionary<string, TextBox>();
             textBoxs.Add("Name", tbName);
-            textBoxs.Add("Description", tbDescription);
             textBoxs.Add("Price", tbPrice);
             textBoxs.Add("MaxPerson", tbMaxPerson);
-            controller = new ControllerRoomType(dgvRoomType, bindingNavigatorRoomType, textBoxs);
+            controller = new ControllerRoomType(dgvRoomType, bindingNavigatorRoomType, textBoxs, rtbDescription);
             controller.FillColumns();
         }
 
         private void FormRoomType_Load(object sender, EventArgs e)
         {
             controller.LoadDB();
+            //rtbDescription.Text = "ddddddddddd";
         }
 
         private void saveToolStripButton_Click(object sender, EventArgs e)
@@ -39,8 +39,19 @@ namespace Hotels.View
 
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
         {
-            controller.Delete();
-            controller.LoadDB();
+            DialogResult dialog = MessageBox.Show("Ви справді хочете видалити тип кімнати?",
+            "Видалення", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dialog == DialogResult.Yes)
+            {
+                controller.Delete();
+                controller.LoadDB();
+            }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

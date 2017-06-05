@@ -9,9 +9,26 @@ namespace Hotels.Model
 {
     public class Room:Base<Room>
     {
-        //public int RoomID { get; set; }
+        //Property
         public string Name { get; set; }
 
+        private int _hotelID;
+        public Hotel Hotel
+        {
+            get
+            {
+                if (_hotelID == -1)
+                    return null;
+                return Hotel.Items[_hotelID];
+            }
+            set
+            {
+                if (value == null)
+                    _hotelID = -1;
+                else
+                    _hotelID = value.ID;
+            }
+        }
         private int _roomTypeID;
         public RoomType RoomType
         {
@@ -29,38 +46,39 @@ namespace Hotels.Model
                     _roomTypeID = value.ID;
             }
         }
-        //List<Client> GuestPersons { get; set; }
-        List<Client> BookedPerson
+
+        public List<Person> BookedPerson
         {
             get
             {
-                var res = new List<Client>();
+                var res = new List<Person>();
                 foreach (var bk in Booking.Items.Values)
-                    if (bk.BookingRoom == this)
+                    if (bk.Room == this)
                         res.Add(bk.Client);
                 return res;
             }
         }
-        List<Booking> Bookings
+        public List<Booking> Bookings
         {
             get
             {
                 var res = new List<Booking>();
                 foreach (var bk in Booking.Items.Values)
-                    if (bk.BookingRoom == this)
+                    if (bk.Room == this)
                         res.Add(bk);
                 return res;
             }
         }
 
+        //DB
         public override void Insert()
         {
             try
             {
                 conn.Open();
                 string query = @"insert into tbRoom
-                            (Name,_roomTypeID)
-                            values (@Name,@_roomTypeID)";
+                            (Name,_roomTypeID,_hotelID)
+                            values (@Name,@_roomTypeID,@_hotelID)";
                 // 2. define parameters used in command object
                 SqlParameter param1 = new SqlParameter();
                 param1.ParameterName = "@Name";
@@ -68,10 +86,14 @@ namespace Hotels.Model
                 SqlParameter param2 = new SqlParameter();
                 param2.ParameterName = "@_roomTypeID";
                 param2.Value = this._roomTypeID;
-                
+                SqlParameter param3 = new SqlParameter();
+                param3.ParameterName = "@_hotelID";
+                param3.Value = this._hotelID;
+
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.Add(param1);
                 cmd.Parameters.Add(param2);
+                cmd.Parameters.Add(param3);
                 cmd.ExecuteNonQuery();
             }
             finally
@@ -83,7 +105,7 @@ namespace Hotels.Model
                 }
             }
         }
-        public override List<Room> Retrieve()
+        public override void Get()
         {
             try
             {
@@ -94,20 +116,18 @@ namespace Hotels.Model
 
                 // 2. Call Execute reader to get query results
                 SqlDataReader rdr = cmd.ExecuteReader();
-                List<Room> list = new List<Room>();
                 Items.Clear();
                 while (rdr.Read())
                 {
                     Room temp = new Room();
                     temp.ID = Convert.ToInt32(rdr[0]);
                     temp.Name = rdr[1].ToString();
-                    temp._roomTypeID = Convert.ToInt32(rdr[2]);                    
-                    list.Add(temp);
+                    temp._roomTypeID = Convert.ToInt32(rdr[2]);
+                    temp._hotelID = Convert.ToInt32(rdr[3]);
                     //словник об'єктів
                     Items.Add(temp.ID, temp);
                 }
                 conn.Close();
-                return list;
             }
             finally
             {
@@ -127,7 +147,8 @@ namespace Hotels.Model
                 string query = @"
                 update tbRoom
                 set Name = @Name,
-                    _roomTypeID = @_roomTypeID
+                    _roomTypeID = @_roomTypeID,
+                    _hotelID = @_hotelID
                 where RoomID = @RoomID";
 
                 // 1. Instantiate a new command with command text only
@@ -141,11 +162,15 @@ namespace Hotels.Model
                 SqlParameter param3 = new SqlParameter();
                 param3.ParameterName = "@RoomID";
                 param3.Value = this.ID;
+                SqlParameter param4 = new SqlParameter();
+                param4.ParameterName = "@_hotelID";
+                param4.Value = this._hotelID;
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.Add(param1);
                 cmd.Parameters.Add(param2);
                 cmd.Parameters.Add(param3);
+                cmd.Parameters.Add(param4);
                 // 3. Call ExecuteNonQuery to send command
                 cmd.ExecuteNonQuery();
             }
@@ -187,6 +212,11 @@ namespace Hotels.Model
                     //Items.Remove(this.ID);
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

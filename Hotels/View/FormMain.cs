@@ -17,32 +17,37 @@ namespace Hotels
 {
     public partial class FormMain : Form
     {
-        SqlConnection connection;
-        string connectionString;
+        //public static Person СurrentUser;
+        public ControllerMain controller;
+        public ControllerProfile controllerProfile;
         public FormMain()
         {
             InitializeComponent();
-            connectionString = ConfigurationManager.ConnectionStrings["Hotels.Properties.Settings.dbHotelsConnectionString"].ConnectionString;
-            connection = new SqlConnection(connectionString);
-            FormLogin formLogin = new FormLogin();
-            formLogin.MdiParent = this;
-            formLogin.Show();
+            Dictionary<string, ToolStripMenuItem> menuItems = new Dictionary<string, ToolStripMenuItem>();
+            menuItems.Add("Dictionary", itemDictionary);
+            menuItems.Add("Booking", itemBooking);
+            menuItems.Add("Statistic", itemStatistic);
+            menuItems.Add("Setting", itemSetting);
+            menuItems.Add("CheckIn", itemCheckIn);
+            menuItems.Add("Payment", itemPayment);
+            menuItems.Add("BookingAll", itemBookingAll);
+            controller = new ControllerMain(menuItems);
+            controllerProfile = new ControllerProfile();
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            //Person person = new Person("Anton","Boloban4","sdd@ukr.net");
-            //person.Create();
-            //List<Person> list = Person.Retrieve();
-            ////connection.Open();
-            ////string query = @"insert into tbPerson
-            ////                (FirstName, LastName,Email)
-            ////                values ('Bogdan', 'Ivashko','ddd@ukr.net')";
-            ////SqlCommand cmd = new SqlCommand(query, connection);
-            ////cmd.ExecuteNonQuery();
-            ////connection.Close();
-            //Draw();
-            //DrawTable.DrawObjectInTable(list.ToArray(), dGVPerson);
+            if (controllerProfile.Authentication())
+            {
+                controller.AccessLevel(ControllerProfile.User);
+                MessageBox.Show("Добрий день,  " + ControllerProfile.User.Login, "Авторизація пройшла успішно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                FormLogin formLogin = new FormLogin();
+                formLogin.MdiParent = this;
+                formLogin.Show();
+            }
         }
 
         private void itemPerson_Click(object sender, EventArgs e)
@@ -87,43 +92,188 @@ namespace Hotels
             formEmployee.Show();
         }
 
-        //private void Draw()
-        //{
-        //    using (connection = new SqlConnection(connectionString))
-        //    using (SqlDataAdapter adapter = new SqlDataAdapter("SELECT * FROM tbPerson", connection))
-        //    {
-        //        DataTable personTable = new DataTable();
-        //        adapter.Fill(personTable);
-        //        lB1.DisplayMember = "LastName";
-        //        lB1.ValueMember = "PersonId";
-        //        lB1.DataSource = personTable;
-        //    }
-        //}
+        private void itemHotelRoomType_Click(object sender, EventArgs e)
+        {
+            FormHotelRoomType form = new FormHotelRoomType();
+            form.MdiParent = this;
+            form.Show();
+        }
 
-        //private void btnDelete_Click(object sender, EventArgs e)
-        //{
-        //    List<Person> list = Person.Retrieve();
-        //    foreach (var item in list)
-        //    {
-        //        item.Delete();
-        //    }
-        //    List<Person> list1 = Person.Retrieve();
-        //    Draw();
-        //    DrawTable.DrawObjectInTable(list1.ToArray(), dGVPerson);
-        //}
+        private void itemRefresh_Click(object sender, EventArgs e)
+        {
+            FormLogin formLogin = new FormLogin();
+            formLogin.MdiParent = this;
+            formLogin.Show();
+        }
 
-        //private void btUpdate_Click(object sender, EventArgs e)
-        //{
-        //    List<Person> list = Person.Retrieve();
-        //    foreach (var item in list)
-        //    {
-        //        item.Telephone = "+380980127501";
-        //        item.Birth = new DateTime(1997, 08, 29);
-        //        item.Update();
-        //    }
-        //    List<Person> list1 = Person.Retrieve();
-        //    Draw();
-        //    DrawTable.DrawObjectInTable(list1.ToArray(), dGVPerson);
-        //}
+        private void itemExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void itemAboutProgram_Click(object sender, EventArgs e)
+        {
+            FormAbout form = new FormAbout();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemMakeBooking_Click(object sender, EventArgs e)
+        {
+            FormBookingMake form = new FormBookingMake();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemMyBooking_Click(object sender, EventArgs e)
+        {
+            FormBookingClient form = new FormBookingClient();
+            form.MdiParent = this;
+            form.Show();
+        }
+        private void itemCheckIn_Click(object sender, EventArgs e)
+        {
+            FormCheckIn form = new FormCheckIn();
+            form.MdiParent = this;
+            form.Show();
+        }
+        bool exitfirst = true;
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (exitfirst)
+            {
+                DialogResult dialog = MessageBox.Show("Ви справді хочете вийти з програми?",
+                "Вихід", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (dialog == DialogResult.Yes)
+                {
+                    exitfirst = false;
+                    Application.Exit();
+                }
+                else if (dialog == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
+            else
+                Application.Exit();
+        }
+
+
+        private void itemSettingHotels_Click(object sender, EventArgs e)
+        {
+            FormHotel form = new FormHotel();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemSettingTypeRooms_Click(object sender, EventArgs e)
+        {
+            FormRoomType form = new FormRoomType();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemSettingRooms_Click(object sender, EventArgs e)
+        {
+            FormRoom form = new FormRoom();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemPayment_Click(object sender, EventArgs e)
+        {
+            FormPayment form = new FormPayment();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemDictionaryHotelEmployee_Click(object sender, EventArgs e)
+        {
+            FormHotelEmployee form = new FormHotelEmployee();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemStatisticEmployee_Click(object sender, EventArgs e)
+        {
+            FormStatisticEmployee form = new FormStatisticEmployee();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemStatisticHotel_Click(object sender, EventArgs e)
+        {
+            FormStatisticHotel form = new FormStatisticHotel();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemProfile_Click(object sender, EventArgs e)
+        {
+            FormProfile form = new FormProfile();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemSettingHotelList_Click(object sender, EventArgs e)
+        {
+            FormHotel form = new FormHotel();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemSettingHotelRoom_Click(object sender, EventArgs e)
+        {
+            FormHotelRoomType form = new FormHotelRoomType();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemSettingHotelEmployee_Click(object sender, EventArgs e)
+        {
+            FormHotelEmployee form = new FormHotelEmployee();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemSettingPerson_Click(object sender, EventArgs e)
+        {
+            FormPerson form = new FormPerson();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemBookingAll_Click(object sender, EventArgs e)
+        {
+            FormBooking form = new FormBooking();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemSettingPersonAll_Click(object sender, EventArgs e)
+        {
+            FormPerson form = new FormPerson();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemSettingPersonEmployee_Click(object sender, EventArgs e)
+        {
+            FormEmployee form = new FormEmployee();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void itemSettingClient_Click(object sender, EventArgs e)
+        {
+            FormClient form = new FormClient();
+            form.MdiParent = this;
+            form.Show();
+        }
+
+       
+
+        
     }
 }
